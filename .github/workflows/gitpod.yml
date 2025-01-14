@@ -1,52 +1,44 @@
-# .gitpod.yml
-
+# GitPod הגדרות
 tasks:
-    - init: |
-        # עדכון pip והתקנת תלויות Python
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        
-        # התקנת תלויות Node.js עבור החזית
-        cd frontend && npm install
-      command: |
-        # הרצת השרת האחורי עם uvicorn
-        uvicorn backend:app --host 0.0.0.0 --port 8000 &
-        
-        # הרצת שרת החזית (frontend) עם Vite
-        cd frontend && npm run dev
-  
-  ports:
-    - port: 8000
-      onOpen: open-preview # שרת backend נפתח כ-preview
-    - port: 5173
-      onOpen: open-preview # שרת frontend נפתח כ-preview
-    - port: 5000
-      visibility: public # פורט ציבורי אם נדרש
-    - port: 5900
-      visibility: public
-  
-  env:
-    # משתני סביבה עבור הפרויקט
-    ANTHROPIC_API_KEY: "your_anthropic_api_key"
-    TAVILY_API_KEY: "your_tavily_api_key"
-    SEARCH_PROVIDER: "SEARXNG" # או "TAVILY"
-    SEARXNG_URL: "http://192.168.1.10:4000"
-    SEARXNG_RESULTS: "5"
-    MAX_ITERATIONS: "5"
-  
-  vscode:
-    extensions:
-      - ms-python.python # הרחבת Python
-      - dbaeumer.vscode-eslint # הרחבת ESLint
-      - esbenp.prettier-vscode # הרחבת Prettier
-  
-  github:
-    prebuilds:
-      # הפעלת Prebuilds עבור שיפור ביצועים ב-Gitpod
-      master: true
-      branches: true
-      pullRequests: true
-  
-  image:
-    # שימוש בתמונה מותאמת אישית
-    file: .gitpod.Dockerfile
+  - name: Backend
+    init: |
+      # התקנת תלויות של Python
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    command: |
+      # הרצת השרת Backend
+      uvicorn backend:app --reload --host 0.0.0.0 --port 8000
+    openMode: split-right
+
+  - name: Frontend
+    init: |
+      # התקנת תלויות של Node.js
+      cd frontend
+      npm install
+    command: |
+      # הרצת השרת Frontend
+      cd frontend
+      npm run dev
+    openMode: split-left
+
+github:
+  prebuilds:
+    branches:
+      main: true       # Prebuild עבור branch "main"
+      feature/*: true  # Prebuild עבור כל branch שמתחיל ב-"feature/"
+
+ports:
+  - port: 8000
+    onOpen: open-preview # פותח תצוגה מקדימה עבור Backend
+  - port: 5173
+    onOpen: open-preview # פותח תצוגה מקדימה עבור Frontend
+
+env:
+  # משתני סביבה נדרשים
+  ANTHROPIC_API_KEY: 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
+  SEARCH_PROVIDER: SEARXNG
+  SEARXNG_URL: http://192.168.1.10:4000
+  SEARXNG_RESULTS: 5
+  TAVILY_API_KEY: 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
+  CLAUDE_MODEL: claude-3-5-sonnet-latest
+  MAX_ITERATIONS: 5
