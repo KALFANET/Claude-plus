@@ -260,3 +260,4 @@ This project is under active development. Features may change, and there might b
 - Tavily for the search API
 - SearXNG for there privacy focus search
 - For giving me the idea for building a web version based on the ideas of a cli version https://github.com/Doriandarko/claude-engineer
+# Claude-plus
