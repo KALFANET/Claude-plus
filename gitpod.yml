@@ -1,0 +1,10 @@
+# קובץ הגדרות GitPod
+tasks:
+  - init: npm install       # התקנת חבילות תלות
+    command: npm run dev    # הפעלת שרת הפיתוח
+
+github:
+  prebuilds:
+    branches:
+      - main                # Prebuild עבור branch "main"
+      - feature/*           # Prebuild עבור כל branch feature
