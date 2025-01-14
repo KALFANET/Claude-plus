@@ -1,0 +1,52 @@
+# .gitpod.yml
+
+tasks:
+  - init: |
+      # עדכון pip והתקנת תלויות Python
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      
+      # התקנת תלויות Node.js עבור החזית
+      cd frontend && npm install
+    command: |
+      # הרצת השרת האחורי עם uvicorn
+      uvicorn backend:app --host 0.0.0.0 --port 8000 &
+      
+      # הרצת שרת החזית (frontend) עם Vite
+      cd frontend && npm run dev
+
+ports:
+  - port: 8000
+    onOpen: open-preview # שרת backend נפתח כ-preview
+  - port: 5173
+    onOpen: open-preview # שרת frontend נפתח כ-preview
+  - port: 5000
+    visibility: public # פורט ציבורי אם נדרש
+  - port: 5900
+    visibility: public
+
+env:
+  # משתני סביבה עבור הפרויקט
+  ANTHROPIC_API_KEY: "your_anthropic_api_key"
+  TAVILY_API_KEY: "your_tavily_api_key"
+  SEARCH_PROVIDER: "SEARXNG" # או "TAVILY"
+  SEARXNG_URL: "http://192.168.1.10:4000"
+  SEARXNG_RESULTS: "5"
+  MAX_ITERATIONS: "5"
+
+vscode:
+  extensions:
+    - ms-python.python # הרחבת Python
+    - dbaeumer.vscode-eslint # הרחבת ESLint
+    - esbenp.prettier-vscode # הרחבת Prettier
+
+github:
+  prebuilds:
+    # הפעלת Prebuilds עבור שיפור ביצועים ב-Gitpod
+    master: true
+    branches: true
+    pullRequests: true
+
+image:
+  # שימוש בתמונה מותאמת אישית
+  file: .gitpod.Dockerfile
