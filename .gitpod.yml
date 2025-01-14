@@ -1,4 +1,4 @@
-# GitPod הגדרות 
+# GitPod הגדרות
 tasks:
   - name: Backend
     init: |
@@ -24,8 +24,8 @@ tasks:
 github:
   prebuilds:
     branches:
-      - main        # Prebuild עבור branch "main"
-      - feature/*   # Prebuild עבור כל branch שמתחיל ב-"feature/"
+      main: true       # Prebuild עבור branch "main"
+      feature/*: true  # Prebuild עבור כל branch שמתחיל ב-"feature/"
 
 ports:
   - port: 8000
