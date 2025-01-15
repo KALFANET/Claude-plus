@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: 'https://5174-kalfanet-claudeplus-i3lgnlz7xdr.ws-us117.gitpod.io',
         changeOrigin: true,
       }
     }
